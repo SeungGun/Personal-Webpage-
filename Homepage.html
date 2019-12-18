@@ -1,0 +1,376 @@
+<!doctype html>	
+<html lang="en">
+ <head>
+ <style type="text/css" >
+* {margin: 0; padding: 0; box-sizing:border-box;}
+   html,body {height: 100%;}
+   html{ scroll-behavior: smooth;}
+/*-----------------------------------------------------------Body frame option */   
+   #wrap{width:100%; 
+   height:3500px; 
+   overflow: hidden;}
+
+   #left{float:left; 
+   width:15%; 
+   height:90%;  /* outline: border와 비슷한 의미 그러나 내부간섭x */
+   word-wrap:break-word;}
+   
+   #main{float:left;
+   border-left: 2px solid hidden;
+   border-right: 2px solid hidden;
+   width:70%;
+   height:90%;
+   word-wrap:break-word;}
+   
+   #right{float: right;
+   width:15%;
+   height:90%;
+   word-wrap:break-word;}
+   
+   #footer{clear:both;          /* clear:both -> float 속성의 영향을 받지 않겠다라는 의미 */
+   height:10%;
+   border-top: 2px solid black;	
+   background:black;
+   color:#cfcfcf;  
+   text-align:center;
+   padding:100px;}
+
+   #main_bar {
+   border: 1px solid #d4d4d4;
+   border-radius:20px;
+   font-weight:bold;
+   height: 1.6%;}
+   
+   #main_header_text { padding-top:40px;
+   padding-bottom:60px; 
+   font-size: 50pt;
+   font-weight: bold;
+   text-align: center;
+   font-family: cursive;}   
+   
+	#info{
+   background:#dfdfdf;
+   width:100%;
+   height:42.25%;
+   border-radius: 20px 20px 0px 0px;
+   border-top: 1px solid black;}
+/*------------------------------------------------------------------- Layout */
+   img{ display: block; width:100%; height:300px;}
+   img#scroll_up { width:80px; height:80px; cursor:pointer; border-radius:100%; background:white;}
+   img#scroll_up:hover{ background: green; transition: 1.2s;}
+   img#search{width:40px; height:40px; border:1px solid gray;float:right;padding:5px;margin-top:45px;}
+   img#search:hover { cursor:pointer; background:#cfcfcf; transition-duration: 0.2s; border:6px solid #3e3e3e; }
+   img#clocks{  width:30px; height:30px; float:left;  }
+   img#banner{ margin-top:20px;}
+   img#imgup{width:40px; height:40px; border:3px solid white; border-radius:100%; }
+   img#imgup:hover{border: 4px solid #00ff33; transition: all 0.2s;} 
+   img#Gachon{ display:block; width:60px; height:60px;}
+   img#arduino{ display:block; width:60px; height:60px;}
+   img#cafe{ display:block; width:60px; height:60px;}
+   img#SWgachon{ display:block; width:60px; height:60px;}
+   img#Cygachon{ display:block; width:60px; height:60px;}
+   img#battleground{display:block; width: 450px; height: 350px;   margin-left:80px; float:left;}
+   img#lols{display:block; width: 400px; height: 250px;   margin-left:80px; float:left;}
+
+
+/*----------------------------------------------------------------------Images */
+
+a{text-decoration: none;  transition: color 0.3s ease; color:white;}
+a:hover {
+color: orange;
+transition-duration: 0.4s;}
+h1 { border-bottom: 5px solid #33ffff; display:inline; border-left: 1px solid #dfdfdf;border-right: 1px solid #dfdfdf;}
+
+
+#menuToggle{display: block; position: relative; top: 50px; left: 50px;z-index: 1; margin-top:30px; margin-left:10px;  user-select: none;}
+
+#menuToggle input[type="checkbox"]{display: block;width: 40px;height: 32px;position: absolute; top: -7px;left: -5px;cursor: pointer;opacity: 0; z-index: 2; touch-callout: none;}
+
+#menuToggle span
+{display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative; 
+  background: black;
+  border-radius: 3px;
+  z-index: 1;
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+} 
+
+#menuToggle span:first-child{ transform-origin: 0% 0%; }
+
+#menuToggle span:nth-last-child(2){transform-origin: 0% 100%;}
+
+#menuToggle input[type="checkbox"]:checked ~ span{opacity: 1;transform: rotate(45deg) translate(-2px, -1px);background: #232323;}
+
+#menuToggle input[type="checkbox"]:checked ~ span:nth-last-child(3){opacity: 0;transform: rotate(0deg) scale(0.2, 0.2);}
+
+#menuToggle input[type="checkbox"]:checked ~ span:nth-last-child(2){transform: rotate(-45deg) translate(0, -1px);}
+
+#menu{
+  position: absolute;
+  width: 185px;
+  height: 1375px;
+  margin: -100px 0 0 -50px;
+  padding: 20px;
+  padding-top: 125px;
+  background: #ededed;
+  list-style-type: none;
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menuToggle input[type="checkbox"]:checked ~ ul{transform: none; }
+/* ------------------------------------------------------------------------- Menu */
+input[type="radio"] { display:none;}
+input[type="radio"] + label {margin-left:30px;
+width:16%; height:5%; 
+display:inline-block; 
+padding:10px; 
+border-right: 1px solid #dfdfdf;  
+border-left:1px solid #dfdfdf;
+color:#999; font-size:14px; 
+cursor:pointer; 
+margin-bottom:-0.5px;
+}
+input[type="radio"]:checked + label {  color:red; font-weight:bold; background:#dfdfdf;}
+input[type="radio"] + label:hover {  color:#ff0066; transition-duration: 0.4s; }
+.conbox { width:100%; height:1200px; background:#dfdfdf;  display:none; border-radius:20px;}
+
+input[id="tab1"]:checked ~ .con1{ display:block; text-align:center; font-size: 16pt; }
+input[id="tab2"]:checked ~ .con2{ display:block;}
+input[id="tab3"]:checked ~ .con3{ display:block;}
+input[id="tab4"]:checked ~ .con4{ display:block;}
+input[id="tab5"]:checked ~ .con5{ display:block;}
+
+iframe { 
+width:100%;
+height:100%;
+border:none;
+}
+
+.searching {
+width:30px;
+height: 30px;
+float:right;
+}
+#login{ float:right; margin-top:5px;} 
+ 
+ #clock{border:1px ridge #dedede; width:160px; height:22px; line-height:20px; color:#666;font-size:20px; text-align:center;   margin-top:5px; float:left; }
+
+#top{ padding:0px 12px 12px 12px;border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;}
+
+
+iframe#Menu1{ width:100%; border:none;}
+ 
+
+ input[id="line1"] + label { width:120px;
+  height: 40px;
+  background:#242628;
+  border-left: 10px solid #00FEDE;
+  color:white;
+  margin-top:40px;
+  margin-right:120px;
+  overflow:hidden;}
+
+ input[id="line1"] + label:hover {border-left:10px solid red;color: orange;transition-duration: 0.4s;} 
+ input[id="line1"]:checked ~ .go1{ display:block; color:orange;}
+ 
+ .gobutton{ margin-top:30px;display:block; border-left: 5px solid #00FEDE; width:120px; height: 40px; background:#3e3e3e; color:white; float:left;}
+ .gobutton:hover{border-left:5px solid red;
+   color: orange;
+   transition-duration: 0.4s;
+   background:#919191;
+   }
+ </style>
+ 
+ 
+ 
+ <script>
+function printClock() {
+    
+    var clock = document.getElementById("clock");            // 출력할 장소 선택
+    var currentDate = new Date();                                     // 현재시간
+    var calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() // 현재 날짜
+    var amPm = 'AM'; // 초기값 AM
+    var currentHours = addZeros(currentDate.getHours(),2); 
+    var currentMinute = addZeros(currentDate.getMinutes() ,2);
+    var currentSeconds =  addZeros(currentDate.getSeconds(),2);
+    
+    if(currentHours >= 12){ // 시간이 12보다 클 때 PM으로 세팅, 12를 빼줌
+    	amPm = 'PM';
+    	currentHours = addZeros(currentHours - 12,2);
+    }
+
+    if(currentSeconds >= 50){// 50초 이상일 때 색을 변환해 준다.
+       currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
+    }
+    clock.innerHTML = currentHours+" : "+ currentMinute+" : "+currentSeconds +" <span style='font-size:20px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
+    
+    setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+}
+
+function addZeros(num, digit) { // 자릿수 맞춰주기
+	  var zero = '';
+	  num = num.toString();
+	  if (num.length < digit) {
+	    for (i = 0; i < digit - num.length; i++) {
+	      zero += '0';
+	    }
+	  }
+	  return zero + num;
+}
+function Go(){
+
+window.location.href="#info";
+	}
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>SeungGun Shin's HomePage</title>
+ </head>
+ 
+ <body>
+<div id="wrap">
+   <div id="left">
+	   <div id="menuToggle">
+              <input type="checkbox" />
+    
+                  <span></span>
+                  <span></span>
+                  <span></span>
+    
+    
+          <ul id="menu">
+	           
+			   
+                   <a href="Menu1.html" target="Menu1"><input  type="button" class="gobutton" onclick="Go()" value="Home"></a> 
+                    <a href="Project.html" target="Menu1"><input type="button" class="gobutton" onclick="Go()" value="Project"></a>
+                    <a href="Hobby.html" target="Menu1"><input type="button" class="gobutton" onclick="Go()" value="Hobby"></a>
+                    <a href="main.html" target="Menu1"><input type="button" class="gobutton" onclick="Go()" value="Uncertain"></a>
+          
+		  </ul>
+       </div>  <!-- for "menuToggle" </div> -->
+    </div>  <!-- for "left" </div>-->
+	   
+	  <div id="main">
+	   <div id="top">
+	      <img id="clocks" src="clock.jpg" alt="clock img"><div id="clock"> <body onload="printClock()"></div> <!-- for "clock" </div> -->
+	       
+               <div id="login">
+                   <form>
+					   ID: <input type="text" placeholder="ID"> &nbsp;&nbsp; Pw:<input type="password" placeholder="Password">
+                         &nbsp;<button type="submit" value="Enter">Enter</button>
+                   </form>
+				</div> <!-- for "login" </div> -->
+
+            <br>
+      </div> <!-- for "top" </div> -->
+	     <div id="img_search">
+						    <img id="search" src="icon_search2.png" onmouseover="this.src='icon_search2_blue.png'" onmouseout="this.src='icon_search2.png'">
+						 </div> <!-- for "img_search" </div>-->
+              <div class="main_header">
+
+
+
+						     <div id="main_header_text"> 
+							    SeungGun's HomePage
+								 
+							 </div>
+							 
+						 
+			        </div> <!-- for "main_header" </div> -->
+   
+                   <div id="main_bar">
+                        
+                  </div> <!-- for "main_bar" </div> -->
+                         
+						 <div class="img"> 
+                               <img id="banner" src="sg2.jpg" alt="Background image">
+	                     </div> <!-- for "img" </div> -->
+
+						 <div class="tab_content">
+	                            
+		                        <input type="radio" name="tabmenu" id="tab2" checked>
+		                        <label for="tab2">Info</label>
+		                        <input type="radio" name="tabmenu" id="tab3" >
+		                        <label for="tab3">Game</label>
+		                        <input type="radio" name="tabmenu" id="tab4" >
+		                        <label for="tab4">Sites</label>
+		                        <input type="radio" name="tabmenu" id="tab5" >
+		                        <label for="tab5">&nbsp;</label>
+		                         
+		              <div class="conbox con2" style="background:#f4f4f4; font-weight:bold; "><br>&nbsp; <h1>&nbsp;Name&nbsp;:</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shin Seung Gun<br><br><br><br><br><br>
+					  &nbsp; <h1>&nbsp;Born&nbsp;:</h1> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000-11-08, Danwon-gu, Ansan-si, Gyeonggi-do, Republic of Korea<br><br><br><br>
+					  <h1>&nbsp;&nbsp;Background:</h1> <br><br><br>
+					  <h3>&nbsp;&nbsp;graduated from Hwarang elementary school  when  2007 ~ 2013</h3>  <br>
+					  <h3>&nbsp;&nbsp;graduated from Sunil middle school  when 2013 ~ 2016 </h3><br>
+					  <h3>&nbsp;&nbsp;graduated from Ansan Gangseo high school when 2016 ~ 2019</h3><br>
+					  <h3>&nbsp;&nbsp;Now, in Gachon University as a undergraduate Department of Software 2019 ~ </h3> <br>
+					  <h2> &nbsp;&nbsp;Possessing 2-level Chinese character certificate </h2>
+					  <br><br><br><br><br>
+					  <h1>&nbsp;Contact&nbsp;: </h1><br><br>
+					  <p>E-mail: - ssg2864@gc.gachon.ac.kr</p>
+					          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - ssg2864@naver.com <br>
+							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - saverrw2864@naver.com <br><br><br><br><br><br><br><br><br>
+							  <h2>I am interested in IoT field, Because of Arduino Activitys.</h2>
+					  </div>
+		              <div class="conbox con3" style="font-weight:bold; color:white; background:black;"><br><br> <img id="battleground" src="battleground.png" alt="battleground"><h2>   My favorite Game is PUBG's BattleGround
+					  <br><br><br><br>I am enjoying playing FPS Game genres, Among them, BattleGround is more real, more mathematical, more physical. I am firstly known these game of all types. Namely, This is a one of the difficult Game which there are games in the world, but it is my opinion. I think, I CONSIDERABLY well play. <br><br><br><br><br>
+					  <img id="lols" src="lols.jpg" alt="lols">And Game regularly played long time is "League Of Legends". It is Always the most popular game.   
+					  </h2> </div>
+		              <div class="conbox con4" style="font-weight:bold; color:#cc00ff; background:#ccffff;"> 
+					  - Gachon University Homepage <a href="http://www.gachon.ac.kr/main.jsp" target="_blank"><img id="Gachon"src="gachon.jpg" alt="GachonLogo" ></a><br>
+					  - Gachon University Cyber Campus Page <a href="http://cyber.gachon.ac.kr/" target="_blank"><img id="Cygachon" src="gachon_Cyber.jpg" alt="cybergachon"></a><br>
+					  - Gachon University Department of Software Page <a href="https://sw.gachon.ac.kr/cms/" target="_blank"><img id="SWgachon" src="gachon_SW.jpg" alt="SWgachon"></a><br>
+					  - Gachon University Department of Software Naver Cafe <a href="" target="_blank"><img id="cafe"  src="navercafe.jpg" alt="SWcafe"></a><br>
+					  - Arduino Sites <a href="" target="_blank"><img id="arduino" src="arduino.png" alt="arduino"></a> 
+					  - W3schools Sites <br><a href="" target="_blank">W3schools.com</a>
+					  </div>
+					  
+					  
+
+
+	                    </div> <!-- for "tab_content" </div> -->
+						<div id="info">
+						<iframe  id="Menu1" src="Menu1.html"  name="Menu1" scrolling="no">it is not allowed iframe</iframe> 
+                    
+						</div>
+
+         </div> <!-- for "main" </div> --> 
+
+	<div id="right">
+	   <!-- Right Part No contents zone-->
+	</div> 
+	
+	
+	
+	<a style="display:scroll; position:fixed; bottom:5px; right:50%;" href="#main"><img id="imgup"src="icon_up.png"></a>
+
+<div style="position fixed;
+            right: 20px;
+            bottom 20px;
+            background-color:red;">
+   </div>
+
+   <div style="position:absolute;left:20px;top:250px;">
+   </div>
+	<div id="footer">
+	   <br>
+	   <hr>
+	   Copyright 2019 Shin SeungGun<br>
+ E-mail. ssg2864@gc.gachon.ac.kr
+	</div>
+</div>
+                         
+ </body>
+</html>
